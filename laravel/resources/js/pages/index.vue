@@ -5,8 +5,7 @@ import memoList from"../components/memoList/MemoList.vue";
 </script>
 
 <template>
-    <Layout>
-      <MemoForm/>
-      <MemoList/>
-    </Layout>
+        <layout/>
+    <memoForm class="mt-8"/>
+        <memoList/>
 </template>
