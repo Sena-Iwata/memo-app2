@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import Welcome from "../features/Welcome.vue";
+import Layout from "../features/Layout.vue";
+import memoForm from "../components/memoForm/MemoForm.vue";
+import memoList from"../components/memoList/MemoList.vue";
 </script>
 
 <template>
-  <Welcome />
+    <Layout>
+      <MemoForm/>
+      <MemoList/>
+    </Layout>
 </template>
