@@ -16,7 +16,6 @@ class MemoResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
             'content' => $this->content,
             // ★ created_atを 'Y-m-d H:i' 形式の文字列にフォーマット
             'created_at' => $this->created_at->format('Y-m-d H:i'),
