@@ -42,4 +42,5 @@ defineProps({
     required:true,
     },
 })
+defineEmits(['delete-memo']);
 </script>

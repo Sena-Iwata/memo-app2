@@ -20,6 +20,11 @@ import TextareaForm from "@/components/memoForm/TextareaForm.vue";
 import Buttons from "@/components/memoForm/Buttons.vue";
 import CardTitle from "@/components/memoForm/CardTitle.vue";
 import axios from 'axios';
+
+const emit = defineEmits<{
+    (e: 'memo-saved', newMemo: any): void;
+}>();
+
 const memoText=ref("");
 const handleSave = async () => {
     if (memoText.value.length === 0) {
@@ -30,6 +35,7 @@ const handleSave = async () => {
         const response = await axios.post('/api/memos', {
             content: memoText.value,
         });
+        emit('memo-saved', response.data);
         console.log('保存成功:', response.data);
         memoText.value = '';
     } catch (error) {
