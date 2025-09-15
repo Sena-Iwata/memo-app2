@@ -12,6 +12,9 @@ class MemoController extends Controller
      */
     public function index()
     {
+        // 1. データベースからデータを取得
+        $memos = Memo::latest()->get();
+        return MemoResource::collection($memos);
 
     }
 
