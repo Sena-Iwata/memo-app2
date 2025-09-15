@@ -1,5 +1,6 @@
 <template>
     <button
+        @click="$emit('save')"
         :disabled="isDisabled"
         :class="{
         'bg-gray-300 cursor-not-allowed': isDisabled,
@@ -19,4 +20,5 @@ const memoText = ref('');
 defineProps<{
     isDisabled: boolean
 }>();
+defineEmits<{(e: 'save'): void}>();
 </script>
