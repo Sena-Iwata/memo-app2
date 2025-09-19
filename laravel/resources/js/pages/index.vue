@@ -1,7 +1,7 @@
 <template>
         <layout/>
-    <memoForm class="mt-8" @memo-saved="addNewMemoToList"/>
-        <memoList :memos="memos" @delete-memo="deleteMemos"/>
+    <memoForm class="mt-8" @memo-saved="addNewMemoToList" @memo-updated="updateMemoInList" :editing-memo="editingMemo" @cancel-edit="cancelEditing"/>
+        <memoList :memos="memos" @delete-memo="deleteMemos" @edit-memo="startEditing"/>
 </template>
 <script setup lang="ts">
 import Layout from "../features/Layout.vue";
@@ -21,7 +21,7 @@ interface MemoApiResponse {
     data: Memo;
 }
 const memos=ref<Memo[]>([]);
-
+const editingMemo=ref<Memo|null>(null)
 const fetchMemos=async()=>{
     try{
         const response=await axios.get('/api/memos')
@@ -47,5 +47,30 @@ const deleteMemos=async(memoId :number)=> {
 };
 const addNewMemoToList = (newMemoResponse: MemoApiResponse) => {
     memos.value.unshift(newMemoResponse.data);
+};
+
+const startEditing=(memo:Memo)=>{
+    editingMemo.value=memo;
+}
+const cancelEditing = () => {
+    editingMemo.value = null;
+};
+// 1. 引数の名前と型を、受け取るデータの実際の形に合わせる
+const updateMemoInList = (updatedMemoResponse: { data: Memo }) => {
+
+    // 2. まず「包装紙」を剥がして、中のメモ本体を取り出す
+    const updatedMemo = updatedMemoResponse.data;
+
+    // 3. 取り出したメモ本体を使って、配列内を検索する
+    const index = memos.value.findIndex(memo => Number(memo.id) === Number(updatedMemo.id));
+
+    if (index !== -1) {
+        // 4. 配列の要素を、取り出したメモ本体で更新する
+        memos.value[index] = updatedMemo;
+    } else {
+        console.error('更新対象のメモが配列内に見つかりませんでした。');
+    }
+
+    cancelEditing();
 };
 </script>

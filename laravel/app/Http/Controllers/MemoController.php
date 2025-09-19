@@ -45,9 +45,15 @@ class MemoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Memo $memo)
     {
-        //
+        $validatedData = $request->validate([
+            'content' => 'required|string',
+        ]);
+
+        $memo->update($validatedData);
+
+        return new MemoResource($memo);
     }
 
     /**
