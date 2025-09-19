@@ -18,7 +18,10 @@
     <div v-for="memo in memos" :key="memo.id" class="max-w-xl mx-auto bg-white rounded-xl shadow-md p-6 mt-4 flex flex-col group">
         <div class="flex justify-end justify-between">
             <p>{{ memo.content }}</p>
-            <button @click="$emit('delete-memo',memo.id)" class="p-1 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200>"><TrashSvg/></button>
+            <div class="flex items-center space-x-2">
+                <button @click="$emit('edit-memo', memo)" class="p-1 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200>"><EditSvg/></button>
+                <button @click="$emit('delete-memo',memo.id)" class="p-1 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200>"><TrashSvg/></button>
+            </div>
         </div>
         <div class="flex">
         <span class="text-sm text-gray-400">{{ memo.created_at }}</span>
@@ -27,6 +30,7 @@
 
 </template>
 <script setup lang="ts">
+import EditSvg from "@/components/svgs/EditSvg.vue";
 import { PropType } from 'vue';
 import DocumentSvg from "@/components/svgs/DocumentSvg.vue";
 import TrashSvg from "@/components/svgs/TrashSvg.vue";
@@ -42,5 +46,9 @@ defineProps({
     required:true,
     },
 })
-defineEmits(['delete-memo']);
+
+defineEmits<{
+    (e: 'edit-memo', memo: Memo): void;
+    (e: 'delete-memo', id: number): void;
+}>();
 </script>
