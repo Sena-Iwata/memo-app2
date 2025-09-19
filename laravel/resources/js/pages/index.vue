@@ -36,6 +36,11 @@ onMounted(() => {
     fetchMemos();
 });
 const deleteMemos=async(memoId :number)=> {
+
+    if(!confirm('本当にこのメモを削除しますか？')){
+        return;
+    }
+
     try {
         await axios.delete(`/api/memos/${memoId}`);
         memos.value = memos.value.filter(memo => memo.id !== memoId);
