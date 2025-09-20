@@ -1,8 +1,12 @@
 <template>
     <Appheader/>
+<div class="flex justify-end">
+    <LogoutButton/>
+</div>
 </template>
 <script setup>
 import Appheader from "@/components/header/Header.vue";
+import LogoutButton from "@/components/header/LogoutButton.vue";
 </script>
 <style>
 html, body, #app {

@@ -10,6 +10,5 @@
     </header>
 </template>
 <script setup>
-import {defineComponent} from "vue";
 import DocumentSvg from "@/components/svgs/DocumentSvg.vue";
 </script>

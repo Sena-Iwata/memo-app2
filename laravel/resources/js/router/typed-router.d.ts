@@ -19,6 +19,18 @@ declare module 'vue-router/auto-routes' {
    */
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
+    '/Auth/ConfirmPassword': RouteRecordInfo<'/Auth/ConfirmPassword', '/Auth/ConfirmPassword', Record<never, never>, Record<never, never>>,
+    '/Auth/ForgotPassword': RouteRecordInfo<'/Auth/ForgotPassword', '/Auth/ForgotPassword', Record<never, never>, Record<never, never>>,
+    '/Auth/Login': RouteRecordInfo<'/Auth/Login', '/Auth/Login', Record<never, never>, Record<never, never>>,
+    '/Auth/Register': RouteRecordInfo<'/Auth/Register', '/Auth/Register', Record<never, never>, Record<never, never>>,
+    '/Auth/ResetPassword': RouteRecordInfo<'/Auth/ResetPassword', '/Auth/ResetPassword', Record<never, never>, Record<never, never>>,
+    '/Auth/VerifyEmail': RouteRecordInfo<'/Auth/VerifyEmail', '/Auth/VerifyEmail', Record<never, never>, Record<never, never>>,
+    '/Dashboard': RouteRecordInfo<'/Dashboard', '/Dashboard', Record<never, never>, Record<never, never>>,
+    '/Profile/Edit': RouteRecordInfo<'/Profile/Edit', '/Profile/Edit', Record<never, never>, Record<never, never>>,
+    '/Profile/Partials/DeleteUserForm': RouteRecordInfo<'/Profile/Partials/DeleteUserForm', '/Profile/Partials/DeleteUserForm', Record<never, never>, Record<never, never>>,
+    '/Profile/Partials/UpdatePasswordForm': RouteRecordInfo<'/Profile/Partials/UpdatePasswordForm', '/Profile/Partials/UpdatePasswordForm', Record<never, never>, Record<never, never>>,
+    '/Profile/Partials/UpdateProfileInformationForm': RouteRecordInfo<'/Profile/Partials/UpdateProfileInformationForm', '/Profile/Partials/UpdateProfileInformationForm', Record<never, never>, Record<never, never>>,
+    '/Welcome': RouteRecordInfo<'/Welcome', '/Welcome', Record<never, never>, Record<never, never>>,
   }
 
   /**
@@ -34,6 +46,54 @@ declare module 'vue-router/auto-routes' {
   export interface _RouteFileInfoMap {
     'resources/js/pages/index.vue': {
       routes: '/'
+      views: never
+    }
+    'resources/js/pages/Auth/ConfirmPassword.vue': {
+      routes: '/Auth/ConfirmPassword'
+      views: never
+    }
+    'resources/js/pages/Auth/ForgotPassword.vue': {
+      routes: '/Auth/ForgotPassword'
+      views: never
+    }
+    'resources/js/pages/Auth/Login.vue': {
+      routes: '/Auth/Login'
+      views: never
+    }
+    'resources/js/pages/Auth/Register.vue': {
+      routes: '/Auth/Register'
+      views: never
+    }
+    'resources/js/pages/Auth/ResetPassword.vue': {
+      routes: '/Auth/ResetPassword'
+      views: never
+    }
+    'resources/js/pages/Auth/VerifyEmail.vue': {
+      routes: '/Auth/VerifyEmail'
+      views: never
+    }
+    'resources/js/pages/Dashboard.vue': {
+      routes: '/Dashboard'
+      views: never
+    }
+    'resources/js/pages/Profile/Edit.vue': {
+      routes: '/Profile/Edit'
+      views: never
+    }
+    'resources/js/pages/Profile/Partials/DeleteUserForm.vue': {
+      routes: '/Profile/Partials/DeleteUserForm'
+      views: never
+    }
+    'resources/js/pages/Profile/Partials/UpdatePasswordForm.vue': {
+      routes: '/Profile/Partials/UpdatePasswordForm'
+      views: never
+    }
+    'resources/js/pages/Profile/Partials/UpdateProfileInformationForm.vue': {
+      routes: '/Profile/Partials/UpdateProfileInformationForm'
+      views: never
+    }
+    'resources/js/pages/Welcome.vue': {
+      routes: '/Welcome'
       views: never
     }
   }
