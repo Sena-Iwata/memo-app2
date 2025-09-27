@@ -16,7 +16,7 @@
         まだメモがありません。上のフォームから最初のメモを追加しましょう！
     </p>
     <div v-for="memo in memos" :key="memo.id" class="max-w-xl mx-auto bg-white rounded-xl shadow-md p-6 mt-4 flex flex-col group">
-        <div class="flex justify-end justify-between">
+        <div class="flex justify-between">
             <p>{{ memo.content }}</p>
             <div class="flex items-center space-x-2">
                 <button @click="$emit('edit-memo', memo)" class="p-1 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200>"><EditSvg/></button>

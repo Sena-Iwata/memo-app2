@@ -22,46 +22,41 @@
 </template>
 
 <script setup lang="ts">
-import {ref,watch} from "vue";
+import {ref,computed} from "vue";
 import TextareaForm from "@/components/memoForm/TextareaForm.vue";
 import Buttons from "@/components/memoForm/Buttons.vue";
 import CardTitle from "@/components/memoForm/CardTitle.vue";
-import axios from 'axios';
+
+interface Memo {
+    id: number;
+    content: string;
+    created_at: string;
+    updated_at: string;
+}
 
 const props = defineProps<{
+    modelValue: string;
     editingMemo: Memo | null;
 }>();
 const emit = defineEmits<{
-    (e: 'memo-saved', newMemo: any): void;
-    (e: 'memo-updated', updatedMemo: any): void;
+    (e: 'update:modelValue', value: string): void;
+    (e: 'memo-saved'): void;
+    (e: 'memo-updated', data: { id: number; content: string }): void;
     (e: 'cancel-edit'): void;
 }>();
 
 
-const memoText=ref("");
+const memoText=computed({
+    get: () => props.modelValue,
+    set: (value) => emit('update:modelValue', value),
+});
 
-watch(() => props.editingMemo, (newVal) => {
-    if (newVal) {
-        memoText.value = newVal.content; // 編集モード：内容をセット
-    } else {
-        memoText.value = ''; // 新規モード：空にする
-    }
-}, { immediate: true }); // immediate: trueで初期表示時も実行
+
 const handleSave = async () => {
     if (props.editingMemo) {
-        // 更新処理 (PUT)
-        const response = await axios.put(`/api/memos/${props.editingMemo.id}`, {
-            content: memoText.value,
-        });
-        emit('memo-updated', response.data);
-        memoText.value='';
+        emit('memo-updated', { id: props.editingMemo.id, content: memoText.value });
     } else {
-        // 新規作成処理 (POST)
-        const response = await axios.post('/api/memos', {
-            content: memoText.value,
-        });
-        emit('memo-saved', response.data);
-        memoText.value='';
+        emit('memo-saved');
     }
 };
 
