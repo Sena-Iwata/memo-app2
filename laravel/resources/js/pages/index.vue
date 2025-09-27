@@ -1,12 +1,12 @@
 <template>
         <layout/>
-    <memoForm class="mt-8" @memo-saved="addNewMemoToList" @memo-updated="updateMemoInList" :editing-memo="editingMemo" @cancel-edit="cancelEditing"/>
+    <memoForm class="mt-8" v-model="memoText" @memo-saved="handleSave" @memo-updated="updateMemoInList" :editing-memo="editingMemo" @cancel-edit="cancelEditing"/>
         <memoList :memos="memos" @delete-memo="deleteMemos" @edit-memo="startEditing"/>
 </template>
 <script setup lang="ts">
 import Layout from "../features/Layout.vue";
 import memoForm from "../components/memoForm/MemoForm.vue";
-import memoList from"../components/memoList/MemoList.vue";
+import memoList from "../components/memoList/MemoList.vue";
 import {ref} from "vue";
 import axios from "axios";
 import { onMounted } from "vue";
@@ -17,11 +17,9 @@ interface Memo {
     created_at: string;
     updated_at: string;
 }
-interface MemoApiResponse {
-    data: Memo;
-}
 const memos=ref<Memo[]>([]);
 const editingMemo=ref<Memo|null>(null)
+const memoText = ref('');
 const fetchMemos=async()=>{
     try{
         const response=await axios.get('/api/memos')
@@ -35,6 +33,38 @@ const fetchMemos=async()=>{
 onMounted(() => {
     fetchMemos();
 });
+const handleSave = async () => {
+    if (memoText.value.length === 0) {
+        return;
+    }
+    try {
+        const response = await axios.post('/api/memos', {
+            content: memoText.value,
+        });
+        memos.value.unshift(response.data.data);
+        memoText.value = '';
+    } catch (error) {
+        console.error('保存失敗:', error);
+    }
+};
+
+const updateMemoInList = async (memoToUpdate: { id: number; content: string }) => {
+    try {
+        const response = await axios.put(`/api/memos/${memoToUpdate.id}`, {
+            content: memoToUpdate.content
+        });
+
+        const updatedMemo = response.data.data;
+
+        const index = memos.value.findIndex(memo => memo.id === updatedMemo.id);
+        if (index !== -1) {
+            memos.value[index] = updatedMemo;
+        }
+        cancelEditing();
+    } catch (error) {
+        console.error('更新失敗:', error);
+    }
+};
 const deleteMemos=async(memoId :number)=> {
 
     if(!confirm('本当にこのメモを削除しますか？')){
@@ -50,32 +80,15 @@ const deleteMemos=async(memoId :number)=> {
         alert('メモの削除に失敗しました。');
     }
 };
-const addNewMemoToList = (newMemoResponse: MemoApiResponse) => {
-    memos.value.unshift(newMemoResponse.data);
-};
 
-const startEditing=(memo:Memo)=>{
-    editingMemo.value=memo;
-}
+const startEditing = (memo: Memo) => {
+    editingMemo.value = memo;
+    memoText.value = memo.content;
+};
 const cancelEditing = () => {
     editingMemo.value = null;
+    memoText.value = '';
 };
-// 1. 引数の名前と型を、受け取るデータの実際の形に合わせる
-const updateMemoInList = (updatedMemoResponse: { data: Memo }) => {
 
-    // 2. まず「包装紙」を剥がして、中のメモ本体を取り出す
-    const updatedMemo = updatedMemoResponse.data;
 
-    // 3. 取り出したメモ本体を使って、配列内を検索する
-    const index = memos.value.findIndex(memo => Number(memo.id) === Number(updatedMemo.id));
-
-    if (index !== -1) {
-        // 4. 配列の要素を、取り出したメモ本体で更新する
-        memos.value[index] = updatedMemo;
-    } else {
-        console.error('更新対象のメモが配列内に見つかりませんでした。');
-    }
-
-    cancelEditing();
-};
 </script>
