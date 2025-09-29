@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-xl mx-auto bg-white rounded-xl shadow-md p-6 sm:p-8">
+    <div class="max-w-xl mx-auto bg-white rounded-xl shadow-md p-6 sm:p-8 dark:bg-gray-800">
 
         <div class="flex items-center mb-5">
             <CardTitle/>

@@ -4,7 +4,8 @@
         :disabled="isDisabled"
         :class="{
         'bg-gray-300 cursor-not-allowed': isDisabled,
-        'bg-gradient-to-r from-orange-300 to-pink-400 hover:opacity-95': !isDisabled
+        'bg-gradient-to-r from-orange-300 to-pink-400 hover:opacity-95': !isDisabled,
+        'dark:bg-gradient-to-br from-indigo-900 to-slate-900': !isDisabled
         }"
         class="w-full mt-4 flex items-center justify-center px-6 py-3 text-white font-bold rounded-lg transition-all duration-200"
     >

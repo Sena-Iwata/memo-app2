@@ -1,5 +1,5 @@
 <template>
-        <layout/>
+  <layout/>
     <memoForm class="mt-8" v-model="memoText" @memo-saved="handleSave" @memo-updated="updateMemoInList" :editing-memo="editingMemo" @cancel-edit="cancelEditing"/>
         <memoList :memos="memos" @delete-memo="deleteMemos" @edit-memo="startEditing"/>
 </template>
