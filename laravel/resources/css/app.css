@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+        /* ... font-familyなどの他のスタイル ... */
+        background-attachment: fixed;
+
+        /* ★★★ ライトモード時のスタイル ★★★ */
+        @apply bg-gradient-to-br from-[#fffaf5] to-[#fdeee6];
+
+        /* ★★★ ダークモード時のスタイル ★★★ */
+        /* 1. まずライトモードのグラデーション(background-image)を無効にする */
+        @apply dark:bg-none;
+        /* 2. その上で、ダークモードの背景色(background-color)を適用する */
+        @apply dark:bg-gray-900;
+    }
+
+}

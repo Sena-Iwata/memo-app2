@@ -2,7 +2,7 @@
   <textarea :value="modelValue"
             @keydown.enter.prevent="handleEnter"
             @input="emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)"
-      class="w-full h-28 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition duration-200 placeholder:text-gray-400"
+      class="w-full h-28 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition duration-200 placeholder:text-gray-40 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
       placeholder="メモを入力してください...&#10;(Enterで保存、Shift+Enterで改行)"
   ></textarea>
 </template>

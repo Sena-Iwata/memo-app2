@@ -1,6 +1,6 @@
 <template>
     <PlusSvg/>
-    <h2 class="text-xl font-bold text-gray-800">新しいメモ</h2>
+    <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">新しいメモ</h2>
 </template>
 <script setup lang="ts">
 import PlusSvg from "@/components/svgs/PlusSvg.vue";
