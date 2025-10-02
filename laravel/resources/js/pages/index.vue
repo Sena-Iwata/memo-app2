@@ -1,13 +1,22 @@
 <template>
   <layout/>
-    <memoForm class="mt-8" v-model="memoText" @memo-saved="handleSave" @memo-updated="updateMemoInList" :editing-memo="editingMemo" @cancel-edit="cancelEditing"/>
+  <div class="mb-4 justify-center">
+    <input
+        type="text"
+        v-model="searchQuery"
+        placeholder="メモを検索..."
+        class="w-100 px-4 py-2 border rounded-md"
+    />
+  </div>
+
+  <memoForm class="mt-8" v-model="memoText" @memo-saved="handleSave" @memo-updated="updateMemoInList" :editing-memo="editingMemo" @cancel-edit="cancelEditing"/>
         <memoList :memos="memos" @delete-memo="deleteMemos" @edit-memo="startEditing"/>
 </template>
 <script setup lang="ts">
 import Layout from "../features/Layout.vue";
 import memoForm from "../components/memoForm/MemoForm.vue";
 import memoList from "../components/memoList/MemoList.vue";
-import {ref} from "vue";
+import {ref,watch} from "vue";
 import axios from "axios";
 import { onMounted } from "vue";
 
@@ -20,11 +29,23 @@ interface Memo {
 const memos=ref<Memo[]>([]);
 const editingMemo=ref<Memo|null>(null)
 const memoText = ref('');
-const fetchMemos=async()=>{
-    try{
-        const response=await axios.get('/api/memos')
-        memos.value=response.data.data;
-    }
+const searchQuery = ref('');
+
+watch(searchQuery, () => {
+  // ユーザーの入力を待つために、少し遅延させてからAPIを呼ぶ（デバウンス）
+  setTimeout(() => {
+    fetchMemos();
+  }, 300); // 300ミリ秒
+});
+const fetchMemos = async () => {
+  try {
+    const response = await axios.get('/api/memos', {
+      // クエリパラメータとして検索キーワードを送信
+      params: {
+        search: searchQuery.value
+      }
+    });
+    memos.value = response.data.data;}
     catch (error) {
         console.error('メモの取得に失敗しました:', error);
         alert('メモの読み込みに失敗しました。');
