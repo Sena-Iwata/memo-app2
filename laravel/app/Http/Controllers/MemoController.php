@@ -10,12 +10,17 @@ class MemoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         // 1. データベースからデータを取得
-        $memos = Memo::latest()->get();
-        return MemoResource::collection($memos);
+        $memos = Memo::query() // クエリビルダを開始
+        // ->where('user_id', auth()->id()) // 認証を再導入するならこの行を有効化
+        ->latest()
+            // ★★★ filterスコープを使って検索 ★★★
+            ->filter($request->only('search'))
+            ->get();
 
+        return MemoResource::collection($memos);
     }
 
     /**

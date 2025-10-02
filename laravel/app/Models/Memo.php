@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 class Memo extends Model
 {
     use HasFactory;
@@ -14,4 +15,11 @@ class Memo extends Model
      * @var array<int, string>
      */
     protected $fillable = ['content'];
+
+    public function scopeFilter(Builder $query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where('content', 'like', '%'.$search.'%');
+        });
+    }
 }
